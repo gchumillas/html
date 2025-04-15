@@ -2,14 +2,14 @@ module html
 
 import js.dom
 
-pub type Component = fn () &Element
-
 const document = dom.document
 
-pub fn get_element_by_id(id string) ?&Element {
+pub type Component = fn () Element
+
+pub fn get_element_by_id(id string) ?Element {
 	native_element := document.getElementById(id.str)?
 
-	return &Element{
+	return Element{
 		native_element: native_element
 	}
 }
@@ -17,17 +17,17 @@ pub fn get_element_by_id(id string) ?&Element {
 pub struct CreateElementParams {
 pub:
 	tag_name string
-	children []&Element
+	children []Element
 }
 
-pub fn create_element(params CreateElementParams) &Element {
+pub fn create_element(params CreateElementParams) Element {
 	mut target := document.createElement(params.tag_name.str)
 
 	for elem in params.children {
 		target.appendChild(elem.native_element)
 	}
 
-	return &Element{
+	return Element{
 		native_element: target
 	}
 }
@@ -41,7 +41,7 @@ mut:
 	native_element JS.HTMLElement
 }
 
-pub fn (target &Element) add_event_listener(event string, cb fn ()) {
+pub fn (target Element) add_event_listener(event string, cb fn ()) {
 	target.native_element.addEventListener(
 		event.str,
 		fn [cb] (_ JS.Event) { cb() },
@@ -49,15 +49,15 @@ pub fn (target &Element) add_event_listener(event string, cb fn ()) {
 	)
 }
 
-pub fn (target &Element) render(comp Component) {
+pub fn (target Element) render(comp Component) {
 	target.native_element.appendChild(comp().native_element)
 }
 
-pub fn (mut target Element) append_child(el &Element) {
+pub fn (mut target Element) append_child(el Element) {
 	target.native_element.appendChild(el.native_element)
 }
 
-pub fn (target &Element) get_inner_text() string {
+pub fn (target Element) get_inner_text() string {
 	return string(target.native_element.innerText)
 }
 
