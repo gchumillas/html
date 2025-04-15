@@ -2,14 +2,9 @@ module html
 
 import js.dom
 
-const document = dom.document
-
-pub struct Element {
-mut:
-	native_element JS.HTMLElement
-}
-
 pub type Component = fn () &Element
+
+const document = dom.document
 
 pub fn get_element_by_id(id string) ?&Element {
 	native_element := document.getElementById(id.str)?
@@ -23,6 +18,11 @@ pub fn create_element(tag_name string) &Element {
 	return &Element{
 		native_element: document.createElement(tag_name.str)
 	}
+}
+
+pub struct Element {
+mut:
+	native_element JS.HTMLElement
 }
 
 pub fn (target &Element) add_event_listener(event string, cb fn ()) {
