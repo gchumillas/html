@@ -14,11 +14,13 @@ pub fn get_element_by_id(id string) ?&Element {
 	}
 }
 
-pub fn create_element(params struct {
+pub struct CreateElementParams {
 pub:
 	tag_name string
 	children []&Element
-}) &Element {
+}
+
+pub fn create_element(params CreateElementParams) &Element {
 	mut target := document.createElement(params.tag_name.str)
 
 	for elem in params.children {
