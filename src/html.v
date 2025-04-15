@@ -14,11 +14,25 @@ pub fn get_element_by_id(id string) ?&Element {
 	}
 }
 
-pub fn create_element(tag_name string) &Element {
+pub fn create_element(params struct {
+pub:
+	tag_name string
+	children []&Element
+}) &Element {
+	mut target := document.createElement(params.tag_name.str)
+
+	for elem in params.children {
+		target.appendChild(elem.native_element)
+	}
+
 	return &Element{
-		native_element: document.createElement(tag_name.str)
+		native_element: target
 	}
 }
+
+/*
+This module defines the `Element` struct and its associated methods for interacting with HTML elements in a V program.
+*/
 
 pub struct Element {
 mut:
