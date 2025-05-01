@@ -75,6 +75,8 @@ pub fn (target Element) get_inner_text() string {
 	return string(target.native_element.innerText)
 }
 
-pub fn (mut target Element) set_inner_text(text string) {
-	target.native_element.innerText = text.str
+pub fn (mut target Element) set_inner_text(text ?string) {
+	unsafe {
+		target.native_element.innerText = if text == none { nil } else { text.str }
+	}
 }
