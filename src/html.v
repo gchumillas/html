@@ -80,3 +80,14 @@ pub fn (mut target Element) set_inner_text(text ?string) {
 		target.native_element.innerText = if text == none { nil } else { text.str }
 	}
 }
+
+pub fn (mut target Element) empty() {
+	target.set_inner_text('')
+}
+
+pub fn (mut target Element) replace_children(elements []Element) {
+	target.empty()
+	for element in elements {
+		target.append_child(element)
+	}
+}
