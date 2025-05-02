@@ -5,12 +5,4 @@ VMODULES_DIR := $(shell if [ -n "$$VMODULES" ]; then echo "$$VMODULES"; else ech
 install:
 	ln -s $(CURDIR) $(VMODULES_DIR)
 uninstall:
-	rm $(VMODULES_DIR)/rx
-
-# Run tests
-test:
-	v test .
-
-# Format source code
-fmt:
-	v fmt -w .
+	rm $(VMODULES_DIR)/$(notdir $(CURDIR))
